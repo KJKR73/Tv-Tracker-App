@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "294078179243",
+    "firebase_url": "https://tv-tracker-37.firebaseio.com",
+    "project_id": "tv-tracker-37",
+    "storage_bucket": "tv-tracker-37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294078179243:android:0670b7742deddef4b454ee",
+        "android_client_info": {
+          "package_name": "com.tracker.tv_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294078179243-mf9rjpesp8ncdorkbi7i14k10q23r3i9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE1Qbtf76h6lDvr531IHaeBylVC9MfkDM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294078179243-mf9rjpesp8ncdorkbi7i14k10q23r3i9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
