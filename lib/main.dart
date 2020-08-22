@@ -9,9 +9,11 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Wrapper(),
+      home: SafeArea(
+        child: Scaffold(
+          body: Center(
+            child: Wrapper(),
+          ),
         ),
       ),
     );
