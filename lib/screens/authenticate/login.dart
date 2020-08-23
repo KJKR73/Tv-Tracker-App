@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tv_tracker_flutter/shared/constants.dart';
 
 class Login extends StatefulWidget {
@@ -9,6 +13,29 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  String username;
+  String password;
+  String email;
+  Map data;
+  var responseServer;
+
+  Future<void> postLogin(data) async {
+    var response = await post(
+      'http://192.168.29.72:7000/api/login/',
+      body: json.encode(data),
+      headers: {"Content-Type": "application/json"},
+    );
+    setState(() {
+      this.responseServer = response.body;
+    });
+  }
+
+  Future<void> saveDataLocal(data) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("token", data.token);
+    pref.setString("_id", data._id);
+  }
+
   final _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -38,6 +65,7 @@ class _LoginState extends State<Login> {
                             color: Colors.black,
                             fontSize: 50,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "PM",
                           ),
                         ),
                       ),
@@ -100,6 +128,11 @@ class _LoginState extends State<Login> {
                             bottom: 10,
                           ),
                           child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                this.email = value;
+                              });
+                            },
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -114,6 +147,11 @@ class _LoginState extends State<Login> {
                             bottom: 40,
                           ),
                           child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                this.password = value;
+                              });
+                            },
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -139,7 +177,22 @@ class _LoginState extends State<Login> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              if (_formkey.currentState.validate()) {
+                                Map requestBody = {
+                                  "email": this.email,
+                                  "password": this.password,
+                                };
+                                print(jsonEncode(requestBody));
+                                // Make a post request here
+                                await postLogin(requestBody);
+                                var success =
+                                    json.decode(responseServer)["success"];
+                                if (success) {
+                                  Navigator.popAndPushNamed(context, '/home');
+                                }
+                              }
+                            },
                           ),
                         )
                       ],

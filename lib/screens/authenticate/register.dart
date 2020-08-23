@@ -38,6 +38,7 @@ class _RegisterState extends State<Register> {
                             color: Colors.black,
                             fontSize: 50,
                             fontWeight: FontWeight.bold,
+                            fontFamily: "PM",
                           ),
                         ),
                       ),
@@ -147,7 +148,7 @@ class _RegisterState extends State<Register> {
                             textColor: Colors.black,
                             color: Color.fromRGBO(13, 245, 227, 1),
                             child: Text(
-                              "LOGIN",
+                              "REGISTER",
                               style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
