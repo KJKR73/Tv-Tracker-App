@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tv_tracker_flutter/screens/authenticate/authenticate.dart';
 import 'package:tv_tracker_flutter/screens/home/home.dart';
 import 'package:tv_tracker_flutter/screens/wrapper.dart';
 
@@ -12,6 +13,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/home': (context) => Home(),
+        '/authenticate': (context) => Authenticate(),
       },
       home: SafeArea(
         child: Scaffold(

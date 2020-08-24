@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tv_tracker_flutter/services/authentication/auth.dart';
 import 'package:tv_tracker_flutter/shared/constants.dart';
 
 class Login extends StatefulWidget {
@@ -18,23 +17,15 @@ class _LoginState extends State<Login> {
   String email;
   Map data;
   var responseServer;
-
-  Future<void> postLogin(data) async {
-    var response = await post(
-      'http://192.168.29.72:7000/api/login/',
-      body: json.encode(data),
-      headers: {"Content-Type": "application/json"},
-    );
-    setState(() {
-      this.responseServer = response.body;
-    });
-  }
+  String err;
 
   Future<void> saveDataLocal(data) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("token", data.token);
-    pref.setString("_id", data._id);
+    pref.setString("token", data["token"]);
+    pref.setString("_id", data["user_id"]);
   }
+
+  AuthService auth = new AuthService();
 
   final _formkey = GlobalKey<FormState>();
   @override
@@ -161,6 +152,13 @@ class _LoginState extends State<Login> {
                                 .copyWith(hintText: "Enter Password"),
                           ),
                         ),
+                        Text(
+                          err == null ? "" : err,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 15,
+                          ),
+                        ),
                         ButtonTheme(
                           height: 60.0,
                           minWidth: 220.0,
@@ -183,14 +181,26 @@ class _LoginState extends State<Login> {
                                   "email": this.email,
                                   "password": this.password,
                                 };
-                                print(jsonEncode(requestBody));
+
                                 // Make a post request here
-                                await postLogin(requestBody);
-                                var success =
-                                    json.decode(responseServer)["success"];
-                                if (success) {
-                                  Navigator.popAndPushNamed(context, '/home');
+                                var responseServer =
+                                    await auth.postLogin(requestBody);
+
+                                try {
+                                  // if login details valid check for success msg
+                                  var success =
+                                      json.decode(responseServer)["success"];
+
+                                  if (success) {
+                                    Navigator.popAndPushNamed(context, '/home');
+                                  }
+                                } catch (ex) {
+                                  setState(() {
+                                    this.err = "Invalid username/password";
+                                  });
                                 }
+                                // Save the user data in the shared prefs fo the first time
+                                saveDataLocal(json.decode(responseServer));
                               }
                             },
                           ),
