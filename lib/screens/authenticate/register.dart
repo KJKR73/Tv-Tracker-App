@@ -1,4 +1,7 @@
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
+import 'package:tv_tracker_flutter/services/authentication/auth.dart';
 import 'package:tv_tracker_flutter/shared/constants.dart';
 
 class Register extends StatefulWidget {
@@ -10,6 +13,12 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final _formkey = GlobalKey<FormState>();
+  final AuthService _auth = new AuthService();
+  String username;
+  String email;
+  String password;
+  String err;
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -101,13 +110,23 @@ class _RegisterState extends State<Register> {
                             bottom: 10,
                           ),
                           child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                this.username = value;
+                              });
+                            },
                             style: TextStyle(
                               color: Colors.white,
                             ),
                             validator: (val) =>
                                 val.isEmpty ? "Enter a valid Username" : null,
-                            decoration: formDecoration()
-                                .copyWith(hintText: "Enter Username"),
+                            decoration: formDecoration().copyWith(
+                              hintText: "Enter Username",
+                              prefixIcon: Icon(
+                                Icons.person,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                         Container(
@@ -115,13 +134,23 @@ class _RegisterState extends State<Register> {
                             bottom: 10,
                           ),
                           child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                this.email = value;
+                              });
+                            },
                             style: TextStyle(
                               color: Colors.white,
                             ),
                             validator: (val) =>
                                 val.isEmpty ? "Enter a Email" : null,
-                            decoration: formDecoration()
-                                .copyWith(hintText: "Enter Email"),
+                            decoration: formDecoration().copyWith(
+                              hintText: "Enter Email",
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                         Container(
@@ -129,13 +158,30 @@ class _RegisterState extends State<Register> {
                             bottom: 40,
                           ),
                           child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                this.password = value;
+                              });
+                            },
                             style: TextStyle(
                               color: Colors.white,
                             ),
                             validator: (val) =>
                                 val.isEmpty ? "Enter a valid password" : null,
-                            decoration: formDecoration()
-                                .copyWith(hintText: "Enter Password"),
+                            decoration: formDecoration().copyWith(
+                              hintText: "Enter Password",
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          err == null ? "" : this.err,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 15,
                           ),
                         ),
                         ButtonTheme(
@@ -154,7 +200,41 @@ class _RegisterState extends State<Register> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              if (_formkey.currentState.validate()) {
+                                Map body = {
+                                  "username": this.username,
+                                  "email": this.email,
+                                  "password": this.password,
+                                };
+
+                                var response = await _auth.registerUser(body);
+
+                                // check if the user was saved
+                                try {
+                                  if (response.statusCode == 200) {
+                                    Fluttertoast.showToast(
+                                      msg: "Success",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor:
+                                          Color.fromRGBO(32, 26, 48, 1),
+                                      textColor:
+                                          Color.fromRGBO(13, 245, 227, 1),
+                                      fontSize: 16.0,
+                                    );
+                                    widget.toggleView();
+                                  } else {
+                                    setState(() {
+                                      this.err = response.body.toString();
+                                    });
+                                  }
+                                } catch (ex) {
+                                  print(ex);
+                                }
+                              }
+                            },
                           ),
                         )
                       ],

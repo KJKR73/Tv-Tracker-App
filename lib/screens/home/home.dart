@@ -37,11 +37,6 @@ class _HomeState extends State<Home> {
     pref.clear();
   }
 
-  // void initState() {
-  //   getData();
-  //   getData1();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

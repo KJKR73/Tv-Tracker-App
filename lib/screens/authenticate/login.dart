@@ -129,8 +129,13 @@ class _LoginState extends State<Login> {
                             ),
                             validator: (val) =>
                                 val.isEmpty ? "Enter a Email" : null,
-                            decoration: formDecoration()
-                                .copyWith(hintText: "Enter Email"),
+                            decoration: formDecoration().copyWith(
+                              hintText: "Enter Email",
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                         Container(
@@ -148,8 +153,13 @@ class _LoginState extends State<Login> {
                             ),
                             validator: (val) =>
                                 val.isEmpty ? "Enter a valid password" : null,
-                            decoration: formDecoration()
-                                .copyWith(hintText: "Enter Password"),
+                            decoration: formDecoration().copyWith(
+                              hintText: "Enter Password",
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                         Text(
@@ -200,7 +210,8 @@ class _LoginState extends State<Login> {
                                   });
                                 }
                                 // Save the user data in the shared prefs fo the first time
-                                saveDataLocal(json.decode(responseServer));
+                                await saveDataLocal(
+                                    json.decode(responseServer));
                               }
                             },
                           ),

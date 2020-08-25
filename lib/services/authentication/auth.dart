@@ -12,4 +12,13 @@ class AuthService {
     );
     return response.body;
   }
+
+  Future<dynamic> registerUser(body) async {
+    var response = await post(
+      "http://192.168.29.72:7000/api/register/",
+      body: json.encode(body),
+      headers: {"Content-Type": "application/json"},
+    );
+    return response;
+  }
 }
