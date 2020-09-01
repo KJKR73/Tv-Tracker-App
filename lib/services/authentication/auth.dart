@@ -21,4 +21,13 @@ class AuthService {
     );
     return response;
   }
+
+  Future<dynamic> addGlobalSeries(body) async {
+    var response = await post(
+      "http://192.168.29.72:7000/series/add",
+      body: json.encode(body),
+      headers: {"Content-Type": "application/json"},
+    );
+    return response;
+  }
 }

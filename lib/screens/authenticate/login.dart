@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(32, 26, 48, 1),
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Container(
           height: height,
           width: width,

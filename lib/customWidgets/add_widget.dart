@@ -12,17 +12,18 @@ class AddWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var image = base64.decode(this.image64);
     return Container(
-      padding: EdgeInsets.all(5),
+      color: Colors.black,
+      padding: EdgeInsets.fromLTRB(3, 5, 3, 5),
       child: Row(
         children: [
           Expanded(
             flex: 1,
             child: Container(
-              height: 245,
+              height: 200,
               child: ClipRRect(
                 child: Image.memory(
                   image,
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
@@ -30,8 +31,8 @@ class AddWidget extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Container(
-              height: 245,
-              color: Color.fromRGBO(32, 26, 48, 1),
+              height: 200,
+              color: Colors.grey[900],
               child: Padding(
                 padding: EdgeInsets.all(25.0),
                 child: Column(
@@ -41,17 +42,19 @@ class AddWidget extends StatelessWidget {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        "Name: " + name,
+                        name,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 22,
                         ),
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Text(
-                        "Total: " + total,
+                        "Episodes : " + total,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -59,7 +62,7 @@ class AddWidget extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Text(
                         "Season: " + season,
                         style: TextStyle(
