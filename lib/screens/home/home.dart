@@ -100,9 +100,10 @@ class _HomeState extends State<Home> {
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
                   return AddPage(
-                      height: MediaQuery.of(context).size.height - 80,
-                      width: MediaQuery.of(context).size.width,
-                      data: snapshot.data);
+                    height: MediaQuery.of(context).size.height - 80,
+                    width: MediaQuery.of(context).size.width,
+                    data: snapshot.data,
+                  );
                 } else {
                   return Container(
                     child: Center(

@@ -69,7 +69,7 @@ class _AddNewState extends State<AddNew> {
                                   child: Center(
                                     child: InkWell(
                                       child: Text(
-                                        "Tap to add image",
+                                        "Tap on text to add image",
                                         style: TextStyle(
                                           color: Colors.black,
                                         ),
@@ -170,65 +170,106 @@ class _AddNewState extends State<AddNew> {
                               color: Colors.red,
                             ),
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                top: 20,
-                                bottom: 40,
-                              ),
-                              child: ButtonTheme(
-                                minWidth: 130,
-                                height: 20,
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      10,
-                                    ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 10,
+                                    bottom: 40,
+                                    right: 20,
+                                    left: 20,
                                   ),
-                                  color: Color.fromRGBO(13, 245, 227, 1),
-                                  child: Text(
-                                    "Add",
-                                    style: TextStyle(
+                                  child: ButtonTheme(
+                                    minWidth: 120,
+                                    height: 50,
+                                    child: RaisedButton(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          10,
+                                        ),
+                                      ),
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      child: Text(
+                                        "Add",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        if (_formkey.currentState.validate() &&
+                                            _imageDisplay != null) {
+                                          Map body = {
+                                            "name": seriesName,
+                                            "cover": _image64,
+                                            "total": totalEps,
+                                            "season": season,
+                                          };
+                                          var response =
+                                              await _auth.addGlobalSeries(body);
+                                          if (response.statusCode == 200) {
+                                            Fluttertoast.showToast(
+                                              msg: "Success",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Color.fromRGBO(32, 26, 48, 1),
+                                              textColor: Color.fromRGBO(
+                                                  13, 245, 227, 1),
+                                              fontSize: 16.0,
+                                            );
+                                            Navigator.popAndPushNamed(
+                                                context, '/home');
+                                          } else {
+                                            setState(() {
+                                              this.err =
+                                                  response.body.toString();
+                                            });
+                                          }
+                                        }
+                                      },
                                     ),
                                   ),
-                                  onPressed: () async {
-                                    if (_formkey.currentState.validate() &&
-                                        _imageDisplay != null) {
-                                      Map body = {
-                                        "name": seriesName,
-                                        "cover": _image64,
-                                        "total": totalEps,
-                                        "season": season,
-                                      };
-                                      var response =
-                                          await _auth.addGlobalSeries(body);
-                                      if (response.statusCode == 200) {
-                                        Fluttertoast.showToast(
-                                          msg: "Success",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.CENTER,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor:
-                                              Color.fromRGBO(32, 26, 48, 1),
-                                          textColor:
-                                              Color.fromRGBO(13, 245, 227, 1),
-                                          fontSize: 16.0,
-                                        );
-                                        Navigator.popAndPushNamed(
-                                            context, '/home');
-                                      } else {
-                                        setState(() {
-                                          this.err = response.body.toString();
-                                        });
-                                      }
-                                    }
-                                  },
                                 ),
                               ),
-                            ),
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 10,
+                                    bottom: 40,
+                                    left: 20,
+                                    right: 20,
+                                  ),
+                                  child: ButtonTheme(
+                                    minWidth: 130,
+                                    height: 50,
+                                    child: RaisedButton(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          10,
+                                        ),
+                                      ),
+                                      color: Colors.black,
+                                      child: Text(
+                                        "Back",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.popAndPushNamed(
+                                            context, '/home');
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           )
                         ],
                       ),
