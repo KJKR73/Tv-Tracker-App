@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tv_tracker_flutter/screens/add/add_main.dart';
+import 'package:tv_tracker_flutter/screens/watching/watching_main.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -94,61 +95,69 @@ class _HomeState extends State<Home> {
           });
         },
       ),
-      body: _currentIndex == 4
-          ? FutureBuilder(
-              future: initData(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.hasData) {
-                  return AddPage(
-                    height: MediaQuery.of(context).size.height - 80,
-                    width: MediaQuery.of(context).size.width,
-                    data: snapshot.data,
-                  );
-                } else {
-                  return Container(
-                    child: Center(
-                      child: SpinKitFadingCircle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  );
-                }
-              },
-            )
-          : SafeArea(
-              child: SingleChildScrollView(
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Text(
-                          "HOME",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      RaisedButton(
-                        onPressed: () async {
-                          await removeDataLocal();
-                          Navigator.popAndPushNamed(context, '/authenticate');
-                        },
-                        child: Text(
-                          "LOGOUT",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+      body: _load(_currentIndex),
+    );
+  }
+
+  Widget _load(var index) {
+    if (index == 1) {
+      return WatchingPage();
+    } else if (index == 4) {
+      return FutureBuilder(
+        future: initData(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            return AddPage(
+              height: MediaQuery.of(context).size.height - 80,
+              width: MediaQuery.of(context).size.width,
+              data: snapshot.data,
+            );
+          } else {
+            return Container(
+              child: Center(
+                child: SpinKitFadingCircle(
+                  color: Colors.white,
                 ),
               ),
+            );
+          }
+        },
+      );
+    } else {
+      return SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                Center(
+                  child: Text(
+                    "HOME",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                RaisedButton(
+                  onPressed: () async {
+                    await removeDataLocal();
+                    Navigator.popAndPushNamed(context, '/authenticate');
+                  },
+                  child: Text(
+                    "LOGOUT",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
-    );
+          ),
+        ),
+      );
+    }
   }
 }
