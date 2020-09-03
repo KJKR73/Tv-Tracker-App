@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tv_tracker_flutter/customWidgets/watching_widget.dart';
+import 'package:tv_tracker_flutter/custom/watching_widget.dart';
 import 'package:tv_tracker_flutter/services/authentication/auth.dart';
 
 class WatchingPage extends StatefulWidget {
@@ -36,6 +36,7 @@ class _WatchingPageState extends State<WatchingPage> {
                   "Watching",
                   style: TextStyle(
                     color: Colors.white,
+                    fontFamily: "GM",
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
                   ),

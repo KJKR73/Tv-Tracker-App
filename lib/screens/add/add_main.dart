@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:tv_tracker_flutter/customWidgets/add_widget.dart';
+import 'package:tv_tracker_flutter/custom/add_widget.dart';
 import 'package:tv_tracker_flutter/services/authentication/auth.dart';
 
 class AddPage extends StatefulWidget {
@@ -27,12 +26,12 @@ class _AddPageState extends State<AddPage> {
   }
 
   var _controller;
-  var _scrollController;
+  // var _scrollController;
 
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    _scrollController = ScrollController();
+    // _scrollController = ScrollController();
   }
 
   AuthService _auth = AuthService();
@@ -82,6 +81,8 @@ class _AddPageState extends State<AddPage> {
                           hintText: "Search Series",
                           hintStyle: TextStyle(
                             color: Colors.black,
+                            fontFamily: "GM",
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -110,6 +111,7 @@ class _AddPageState extends State<AddPage> {
                               image64: widget.data[index]["cover"],
                               total: widget.data[index]["total"],
                               season: widget.data[index]["season"],
+                              id: widget.data[index]["_id"],
                             );
                           },
                         )
@@ -152,6 +154,8 @@ class _AddPageState extends State<AddPage> {
                             "Don't see you series add it here",
                             style: TextStyle(
                               color: Colors.white,
+                              fontFamily: "GM",
+                              fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),
                           ),
@@ -159,6 +163,9 @@ class _AddPageState extends State<AddPage> {
                         Expanded(
                           flex: 1,
                           child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7),
+                            ),
                             color: Color.fromRGBO(13, 245, 227, 1),
                             child: Icon(
                               Icons.add,

@@ -63,6 +63,9 @@ flutter:
     - family: PM
       fonts:
         - asset: fonts/PermanentMarker-Regular.ttf
+    - family: GM
+      fonts:
+        - asset: fonts/Grandstander-VariableFont_wght.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -24,8 +24,8 @@ class _AddNewState extends State<AddNew> {
     try {
       dynamic userImage = await imagePicker.getImage(
         source: ImageSource.gallery,
-        maxHeight: 800,
-        maxWidth: 600,
+        maxHeight: 640,
+        maxWidth: 480,
       );
       final imageBytes = io.File(userImage.path).readAsBytesSync();
       setState(() {

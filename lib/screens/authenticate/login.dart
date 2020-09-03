@@ -175,7 +175,8 @@ class _LoginState extends State<Login> {
                           buttonColor: Color.fromRGBO(13, 245, 227, 1),
                           child: RaisedButton(
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0)),
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
                             textColor: Colors.black,
                             color: Color.fromRGBO(13, 245, 227, 1),
                             child: Text(
