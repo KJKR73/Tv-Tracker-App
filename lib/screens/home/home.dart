@@ -49,53 +49,55 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(24, 24, 24, 1),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
+    return Container(
+      child: Scaffold(
         backgroundColor: Color.fromRGBO(24, 24, 24, 1),
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white24,
-        items: [
-          BottomNavigationBarItem(
-            title: Text("Home"),
-            icon: Icon(
-              Icons.home,
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Color.fromRGBO(32, 26, 48, 1),
+          currentIndex: _currentIndex,
+          selectedItemColor: Color.fromRGBO(13, 245, 227, 1),
+          unselectedItemColor: Colors.white24,
+          items: [
+            BottomNavigationBarItem(
+              title: Text("Home"),
+              icon: Icon(
+                Icons.home,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            title: Text("Watching"),
-            icon: Icon(
-              Icons.grid_on,
+            BottomNavigationBarItem(
+              title: Text("Watching"),
+              icon: Icon(
+                Icons.grid_on,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            title: Text("Dropped"),
-            icon: Icon(
-              Icons.arrow_downward,
+            BottomNavigationBarItem(
+              title: Text("Dropped"),
+              icon: Icon(
+                Icons.arrow_downward,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            title: Text("Completed"),
-            icon: Icon(
-              Icons.star,
+            BottomNavigationBarItem(
+              title: Text("Completed"),
+              icon: Icon(
+                Icons.star,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            title: Text("Add"),
-            icon: Icon(
-              Icons.add,
+            BottomNavigationBarItem(
+              title: Text("Add"),
+              icon: Icon(
+                Icons.add,
+              ),
             ),
-          ),
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+          ],
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+        ),
+        body: _load(_currentIndex),
       ),
-      body: _load(_currentIndex),
     );
   }
 

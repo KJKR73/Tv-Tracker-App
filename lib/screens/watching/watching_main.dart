@@ -26,7 +26,7 @@ class _WatchingPageState extends State<WatchingPage> {
             flex: 1,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.black,
+                color: Color.fromRGBO(32, 26, 48, 1),
                 border: Border(
                   bottom: BorderSide(color: Colors.white, width: 2),
                 ),
@@ -35,7 +35,7 @@ class _WatchingPageState extends State<WatchingPage> {
                 child: Text(
                   "Watching",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color.fromRGBO(13, 245, 227, 1),
                     fontFamily: "GM",
                     fontSize: 26,
                     fontWeight: FontWeight.bold,

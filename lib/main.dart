@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:tv_tracker_flutter/screens/add/add_info.dart';
 import 'package:tv_tracker_flutter/screens/add/add_new.dart';
 import 'package:tv_tracker_flutter/screens/authenticate/authenticate.dart';
@@ -13,6 +14,7 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Color.fromRGBO(76, 23, 90, 0.2));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {

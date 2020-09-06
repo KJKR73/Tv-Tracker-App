@@ -1,8 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tv_tracker_flutter/services/authentication/auth.dart';
+import 'package:tv_tracker_flutter/shared/constants.dart';
 
 class WatchInd extends StatefulWidget {
   @override
@@ -34,142 +39,305 @@ class _WatchIndState extends State<WatchInd> {
   }
 
   final _formKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService();
   int current;
   String total;
+  String name;
   Map data;
   var body;
   @override
   Widget build(BuildContext context) {
     data = data == null ? ModalRoute.of(context).settings.arguments : data;
     body = data['data'];
-    total = body['total'];
+    this.name = body['name'];
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: Container(
-          color: Colors.grey[850],
-          child: Column(
-            children: [
-              Expanded(
-                flex: 7,
-                child: FutureBuilder(
-                  future: _getImage(data["body"]),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width - 80,
-                        child: Image.memory(
-                          snapshot.data,
-                          fit: BoxFit.fill,
-                        ),
-                      );
-                    } else {
-                      return Container(
-                        child: Center(
-                          child: SpinKitFadingCircle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ),
-              Expanded(
-                flex: 4,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Form(
-                    child: Column(
+        child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: Container(
+            height: MediaQuery.of(context).size.height - 23,
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromRGBO(32, 26, 48, 1),
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
                       children: [
-                        Text(
-                          "Update Info",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 26,
+                        Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.white,
+                              size: 26,
+                            ),
                           ),
                         ),
-                        ListTile(
-                          title: Row(
-                            children: [
-                              Expanded(
-                                flex: 3,
-                                child: Text(
-                                  "Current: ",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "GM",
-                                    fontSize: 26,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                        Expanded(
+                          flex: 9,
+                          child: Center(
+                            child: Text(
+                              body['name'],
+                              style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                                color: Colors.white,
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: Form(
-                                  key: _formKey,
-                                  child: TextFormField(
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                    initialValue: body['current'].toString(),
-                                    onChanged: (val) {
-                                      setState(() {
-                                        this.current = int.parse(val);
-                                        imageCache.clear();
-                                      });
-                                    },
-                                    validator: (value) {
-                                      if (!verfiyInc(value, total)) {
-                                        return null;
-                                      }
-                                      return "NV";
-                                    },
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  '/',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "GM",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  total,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "GM",
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              RaisedButton(
-                                onPressed: () {
-                                  if (_formKey.currentState.validate()) {
-                                    print(current);
-                                  }
-                                },
-                              )
-                            ],
+                            ),
                           ),
-                        )
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(),
+                        ),
                       ],
                     ),
                   ),
                 ),
-              )
-            ],
+                Expanded(
+                  flex: 4,
+                  child: FutureBuilder(
+                    future: _getImage(data["body"]),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2.0,
+                              color: Colors.black,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          width: MediaQuery.of(context).size.width - 170,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.memory(
+                              snapshot.data,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          child: Center(
+                            child: SpinKitFadingCircle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                    child: Form(
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: ListTile(
+                              leading: Text(
+                                "Series Name",
+                                style: GoogleFonts.roboto(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              title: TextFormField(
+                                initialValue: body['name'].toString(),
+                                validator: (val) =>
+                                    val.isEmpty ? "Enter valid name" : null,
+                                onChanged: (val) {
+                                  setState(() {
+                                    this.name = val;
+                                  });
+                                },
+                                decoration: formDecoration().copyWith(
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(11, 0, 0, 0),
+                                ),
+                                style: GoogleFonts.roboto(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: ListTile(
+                              trailing: Text(
+                                "/  " + body["total"],
+                                style: GoogleFonts.roboto(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              leading: Text(
+                                "Current          ",
+                                style: GoogleFonts.roboto(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              title: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Form(
+                                      key: _formKey,
+                                      child: TextFormField(
+                                        decoration: formDecoration().copyWith(
+                                          contentPadding:
+                                              EdgeInsets.fromLTRB(11, 0, 0, 0),
+                                        ),
+                                        style: GoogleFonts.roboto(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        ),
+                                        initialValue:
+                                            body['current'].toString(),
+                                        onChanged: (val) {
+                                          setState(() {
+                                            this.current = int.parse(val);
+                                            imageCache.clear();
+                                          });
+                                        },
+                                        validator: (value) {
+                                          if (!verfiyInc(value, total)) {
+                                            return null;
+                                          }
+                                          return "Enter a valid ep number";
+                                        },
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: ListTile(
+                              leading: Text(
+                                "Total Eps      ",
+                                style: GoogleFonts.roboto(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              title: TextFormField(
+                                keyboardType: TextInputType.number,
+                                initialValue: body['total'].toString(),
+                                validator: (val) =>
+                                    val.isEmpty ? "Enter a valid number" : null,
+                                onChanged: (val) {
+                                  setState(() {
+                                    this.total = val;
+                                  });
+                                },
+                                decoration: formDecoration().copyWith(
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(11, 0, 0, 0),
+                                ),
+                                style: GoogleFonts.roboto(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: ButtonTheme(
+                              minWidth: MediaQuery.of(context).size.width - 90,
+                              child: RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                color: Color.fromRGBO(13, 245, 227, 1),
+                                child: Text(
+                                  "Update",
+                                  style: GoogleFonts.roboto(
+                                    color: Colors.black,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  var id = prefs.getString("_id");
+                                  this.name = this.name == null
+                                      ? this.body['name']
+                                      : name;
+                                  this.total = this.total == null
+                                      ? this.body['total']
+                                      : total;
+                                  this.current = this.current == null
+                                      ? this.body['current']
+                                      : current;
+                                  if (_formKey.currentState.validate()) {
+                                    Map reqBody = {
+                                      "id": id,
+                                      "s_id": this.body['_id'],
+                                      "name": this.name,
+                                      "total": this.total,
+                                      "current": this.current,
+                                    };
+                                    var res =
+                                        await _auth.updateTracker(reqBody);
+                                    if (res.statusCode == 200) {
+                                      Fluttertoast.showToast(
+                                        msg: "Success",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor:
+                                            Color.fromRGBO(32, 26, 48, 1),
+                                        textColor:
+                                            Color.fromRGBO(13, 245, 227, 1),
+                                        fontSize: 16.0,
+                                      );
+                                      Navigator.pop(context);
+                                    } else {
+                                      Fluttertoast.showToast(
+                                        msg: json.decode(res),
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor:
+                                            Color.fromRGBO(32, 26, 48, 1),
+                                        textColor: Colors.red,
+                                        fontSize: 16.0,
+                                      );
+                                    }
+                                  } else {
+                                    print("Error");
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -177,55 +345,32 @@ class _WatchIndState extends State<WatchInd> {
   }
 }
 
-// Expanded(
-//   flex: 1,
-//   child: FlatButton(
-//     color: Colors.blue,
-//     child: Icon(Icons.add),
-//     onPressed: verfiyInc(current, total)
-//         ? null
-//         : () {
-//             setState(() {
-//               body['current'] += 1;
-//             });
-//           },
-//   ),
-// ),
-// Expanded(
-//   flex: 1,
-//   child: Text(
-//     data['data']['current'].toString() + '/',
-//     style: TextStyle(
-//       color: Colors.white,
-//       fontFamily: "GM",
-//       fontSize: 16,
-//       fontWeight: FontWeight.bold,
-//     ),
-//   ),
-// ),
-// Expanded(
-//   flex: 1,
-//   child: Text(
-//     data['data']['total'],
-//     style: TextStyle(
-//       color: Colors.white,
-//       fontFamily: "GM",
-//       fontSize: 16,
-//       fontWeight: FontWeight.bold,
-//     ),
-//   ),
-// ),
-// Expanded(
-//   flex: 1,
-//   child: FlatButton(
-//     color: Colors.blue,
-//     child: Icon(Icons.subway),
-//     onPressed: verfiyDec(current)
-//         ? null
-//         : () {
-//             setState(() {
-//               body['current'] -= 1;
-//             });
-//           },
-//   ),
-// ),
+InputDecoration _decoration() {
+  return InputDecoration(
+    hintStyle: GoogleFonts.roboto(
+      color: Colors.white,
+      fontSize: 16,
+    ),
+    fillColor: Colors.grey[650],
+    filled: true,
+    contentPadding: EdgeInsets.fromLTRB(11, 0, 0, 0),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(5),
+      ),
+      borderSide: BorderSide(
+        color: Colors.white,
+        width: 2,
+      ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(5),
+      ),
+      borderSide: BorderSide(
+        color: Colors.white,
+        width: 2,
+      ),
+    ),
+  );
+}

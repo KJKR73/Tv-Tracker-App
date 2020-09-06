@@ -32,7 +32,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
         });
       },
       child: Container(
-        padding: EdgeInsets.fromLTRB(3, 0, 3, 10),
+        padding: EdgeInsets.fromLTRB(2, 0, 2, 5),
         child: Column(
           children: [
             Expanded(
@@ -69,7 +69,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
                     width: 1,
                     color: Colors.white,
                   ),
-                  color: Colors.grey[850],
+                  color: Color.fromRGBO(32, 26, 48, 1),
                 ),
                 child: Row(
                   children: [
@@ -80,7 +80,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
                           widget.data["name"],
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color.fromRGBO(13, 245, 227, 1),
                             fontFamily: "GM",
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
