@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tv_tracker_flutter/services/authentication/auth.dart';
@@ -15,15 +13,6 @@ class WatchInd extends StatefulWidget {
 }
 
 class _WatchIndState extends State<WatchInd> {
-  Future<dynamic> _getImage(body) async {
-    var response = await post(
-      "http://192.168.29.72:7000/misc/getimage",
-      body: json.encode(body),
-      headers: {"Content-Type": "application/json"},
-    );
-    return base64.decode(json.decode(response.body));
-  }
-
   bool verfiyInc(current, total) {
     if (total == '?') {
       return false;
@@ -103,37 +92,22 @@ class _WatchIndState extends State<WatchInd> {
                 ),
                 Expanded(
                   flex: 4,
-                  child: FutureBuilder(
-                    future: _getImage(data["body"]),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 2.0,
-                              color: Colors.black,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          width: MediaQuery.of(context).size.width - 170,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.memory(
-                              snapshot.data,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        );
-                      } else {
-                        return Container(
-                          child: Center(
-                            child: SpinKitFadingCircle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        );
-                      }
-                    },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 2.0,
+                        color: Colors.black,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    width: MediaQuery.of(context).size.width - 170,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.memory(
+                        data['image64'],
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
                 ),
                 Expanded(
@@ -141,16 +115,26 @@ class _WatchIndState extends State<WatchInd> {
                   child: Container(
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         children: [
                           Expanded(
                             flex: 1,
                             child: ListTile(
-                              leading: Text(
-                                "Series Name",
-                                style: GoogleFonts.roboto(
-                                  color: Colors.white,
-                                  fontSize: 18,
+                              leading: Container(
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(13, 245, 227, 1),
+                                  borderRadius: BorderRadius.circular(3),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(8, 8, 25, 8),
+                                  child: Text(
+                                    "Name",
+                                    style: GoogleFonts.roboto(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                                  ),
                                 ),
                               ),
                               title: TextFormField(
@@ -176,18 +160,36 @@ class _WatchIndState extends State<WatchInd> {
                           Expanded(
                             flex: 1,
                             child: ListTile(
-                              trailing: Text(
-                                "/  " + body["total"],
-                                style: GoogleFonts.roboto(
-                                  color: Colors.white,
-                                  fontSize: 18,
+                              trailing: Container(
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(13, 245, 227, 1),
+                                  borderRadius: BorderRadius.circular(3),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Text(
+                                    "/  " + body["total"],
+                                    style: GoogleFonts.roboto(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                                  ),
                                 ),
                               ),
-                              leading: Text(
-                                "Current          ",
-                                style: GoogleFonts.roboto(
-                                  color: Colors.white,
-                                  fontSize: 18,
+                              leading: Container(
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(13, 245, 227, 1),
+                                  borderRadius: BorderRadius.circular(3),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(8, 8, 17, 8),
+                                  child: Text(
+                                    "Current",
+                                    style: GoogleFonts.roboto(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                                  ),
                                 ),
                               ),
                               title: Row(
@@ -195,33 +197,29 @@ class _WatchIndState extends State<WatchInd> {
                                 children: [
                                   Expanded(
                                     flex: 1,
-                                    child: Form(
-                                      key: _formKey,
-                                      child: TextFormField(
-                                        decoration: formDecoration().copyWith(
-                                          contentPadding:
-                                              EdgeInsets.fromLTRB(11, 0, 0, 0),
-                                        ),
-                                        style: GoogleFonts.roboto(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                        ),
-                                        initialValue:
-                                            body['current'].toString(),
-                                        onChanged: (val) {
-                                          setState(() {
-                                            this.current = int.parse(val);
-                                            imageCache.clear();
-                                          });
-                                        },
-                                        validator: (value) {
-                                          if (!verfiyInc(value, total)) {
-                                            return null;
-                                          }
-                                          return "Enter a valid ep number";
-                                        },
-                                        keyboardType: TextInputType.number,
+                                    child: TextFormField(
+                                      decoration: formDecoration().copyWith(
+                                        contentPadding:
+                                            EdgeInsets.fromLTRB(11, 0, 0, 0),
                                       ),
+                                      style: GoogleFonts.roboto(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                      ),
+                                      initialValue: body['current'].toString(),
+                                      onChanged: (val) {
+                                        setState(() {
+                                          this.current = int.parse(val);
+                                          imageCache.clear();
+                                        });
+                                      },
+                                      validator: (value) {
+                                        if (!verfiyInc(value, total)) {
+                                          return null;
+                                        }
+                                        return "Enter a valid ep number";
+                                      },
+                                      keyboardType: TextInputType.number,
                                     ),
                                   ),
                                 ],
@@ -231,11 +229,20 @@ class _WatchIndState extends State<WatchInd> {
                           Expanded(
                             flex: 1,
                             child: ListTile(
-                              leading: Text(
-                                "Total Eps      ",
-                                style: GoogleFonts.roboto(
-                                  color: Colors.white,
-                                  fontSize: 18,
+                              leading: Container(
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(13, 245, 227, 1),
+                                  borderRadius: BorderRadius.circular(3),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(8, 8, 5, 8),
+                                  child: Text(
+                                    "Total Eps",
+                                    style: GoogleFonts.roboto(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                                  ),
                                 ),
                               ),
                               title: TextFormField(
@@ -261,73 +268,86 @@ class _WatchIndState extends State<WatchInd> {
                           ),
                           Expanded(
                             flex: 1,
-                            child: ButtonTheme(
-                              minWidth: MediaQuery.of(context).size.width - 90,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                color: Color.fromRGBO(13, 245, 227, 1),
-                                child: Text(
-                                  "Update",
-                                  style: GoogleFonts.roboto(
-                                    color: Colors.black,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: ButtonTheme(
+                                minWidth:
+                                    MediaQuery.of(context).size.width - 90,
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                ),
-                                onPressed: () async {
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  var id = prefs.getString("_id");
-                                  this.name = this.name == null
-                                      ? this.body['name']
-                                      : name;
-                                  this.total = this.total == null
-                                      ? this.body['total']
-                                      : total;
-                                  this.current = this.current == null
-                                      ? this.body['current']
-                                      : current;
-                                  if (_formKey.currentState.validate()) {
-                                    Map reqBody = {
-                                      "id": id,
-                                      "s_id": this.body['_id'],
-                                      "name": this.name,
-                                      "total": this.total,
-                                      "current": this.current,
-                                    };
-                                    var res =
-                                        await _auth.updateTracker(reqBody);
-                                    if (res.statusCode == 200) {
-                                      Fluttertoast.showToast(
-                                        msg: "Success",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor:
-                                            Color.fromRGBO(32, 26, 48, 1),
-                                        textColor:
-                                            Color.fromRGBO(13, 245, 227, 1),
-                                        fontSize: 16.0,
-                                      );
-                                      Navigator.pop(context);
+                                  color: Color.fromRGBO(13, 245, 227, 1),
+                                  child: Text(
+                                    "Update",
+                                    style: GoogleFonts.roboto(
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    var id = prefs.getString("_id");
+                                    this.name = this.name == null
+                                        ? this.body['name']
+                                        : name;
+                                    this.total = this.total == null
+                                        ? this.body['total']
+                                        : total;
+                                    this.current = this.current == null
+                                        ? this.body['current']
+                                        : current;
+                                    if (_formKey.currentState.validate()) {
+                                      Map reqBody = {
+                                        "id": id,
+                                        "s_id": this.body['_id'],
+                                        "name": this.name,
+                                        "total": this.total,
+                                        "current": this.current,
+                                      };
+                                      var res =
+                                          await _auth.updateTracker(reqBody);
+                                      if (this.total.toString() ==
+                                          this.current.toString()) {
+                                        var compBody = {
+                                          "id": id,
+                                          "s_id": this.body['_id'],
+                                        };
+                                        await _auth.addToCompleted(compBody);
+                                      }
+                                      if (res.statusCode == 200) {
+                                        Fluttertoast.showToast(
+                                          msg: "Success",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor:
+                                              Color.fromRGBO(32, 26, 48, 1),
+                                          textColor:
+                                              Color.fromRGBO(13, 245, 227, 1),
+                                          fontSize: 16.0,
+                                        );
+                                        Navigator.popAndPushNamed(
+                                            context, '/home');
+                                      } else {
+                                        Fluttertoast.showToast(
+                                          msg: json.decode(res),
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor:
+                                              Color.fromRGBO(32, 26, 48, 1),
+                                          textColor: Colors.red,
+                                          fontSize: 16.0,
+                                        );
+                                      }
                                     } else {
-                                      Fluttertoast.showToast(
-                                        msg: json.decode(res),
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor:
-                                            Color.fromRGBO(32, 26, 48, 1),
-                                        textColor: Colors.red,
-                                        fontSize: 16.0,
-                                      );
+                                      print("Error");
                                     }
-                                  } else {
-                                    print("Error");
-                                  }
-                                },
+                                  },
+                                ),
                               ),
                             ),
                           ),

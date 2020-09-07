@@ -64,10 +64,13 @@ class _WatchingPageState extends State<WatchingPage> {
                   ),
                 );
               } else {
-                return Container(
-                  child: Center(
-                    child: SpinKitFadingCircle(
-                      color: Colors.white,
+                return Expanded(
+                  flex: 8,
+                  child: Container(
+                    child: Center(
+                      child: SpinKitFadingCircle(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 );

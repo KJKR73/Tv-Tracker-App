@@ -25,10 +25,12 @@ class _WatchingWidgetState extends State<WatchingWidget> {
   Widget build(BuildContext context) {
     Map body = {"series_id": widget.data["_id"]};
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        var image64 = await _getImage(body);
         Navigator.pushNamed(context, '/watch_info', arguments: {
           "body": body,
           "data": widget.data,
+          "image64": image64,
         });
       },
       child: Container(

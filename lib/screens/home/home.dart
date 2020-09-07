@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tv_tracker_flutter/screens/add/add_main.dart';
+import 'package:tv_tracker_flutter/screens/completed/completed_main.dart';
 import 'package:tv_tracker_flutter/screens/watching/watching_main.dart';
 
 class Home extends StatefulWidget {
@@ -51,7 +52,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(24, 24, 24, 1),
+        backgroundColor: Color.fromRGBO(32, 26, 48, 1),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Color.fromRGBO(32, 26, 48, 1),
@@ -104,6 +105,8 @@ class _HomeState extends State<Home> {
   Widget _load(var index) {
     if (index == 1) {
       return WatchingPage();
+    } else if (index == 3) {
+      return CompletedPage();
     } else if (index == 4) {
       return FutureBuilder(
         future: initData(),

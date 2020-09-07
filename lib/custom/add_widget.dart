@@ -1,10 +1,10 @@
 import 'dart:convert';
-
 import "package:flutter/material.dart";
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: must_be_immutable
 class AddWidget extends StatelessWidget {
   String image64;
   String total;
@@ -16,7 +16,7 @@ class AddWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<dynamic> addSeriesTracker(body) async {
       var response = await post(
-        "http://192.168.29.72:7000/tracker/addNewSeries",
+        "http://192.168.29.72:7000/tracker/watching/addNewSeries",
         body: json.encode(body),
         headers: {"Content-Type": "application/json"},
       );

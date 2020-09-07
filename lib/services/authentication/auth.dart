@@ -25,7 +25,7 @@ class AuthService {
 
   Future<dynamic> addGlobalSeries(body) async {
     var response = await post(
-      "http://192.168.29.72:7000/series/add",
+      "http://192.168.29.72:7000/series/watching/add",
       body: json.encode(body),
       headers: {"Content-Type": "application/json"},
     );
@@ -36,7 +36,7 @@ class AuthService {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var id = pref.getString("_id");
     var response = await post(
-      "http://192.168.29.72:7000/tracker/getracker",
+      "http://192.168.29.72:7000/tracker/watching/getracker",
       body: json.encode({
         "id": id,
       }),
@@ -47,7 +47,7 @@ class AuthService {
 
   Future<dynamic> addSeriesTracker(body) async {
     var response = await post(
-      "http://192.168.29.72:7000/tracker/addNewSeries",
+      "http://192.168.29.72:7000/tracker/watching/addNewSeries",
       body: json.encode(body),
       headers: {"Content-Type": "application/json"},
     );
@@ -57,7 +57,27 @@ class AuthService {
 
   Future<dynamic> updateTracker(body) async {
     var response = await post(
-      "http://192.168.29.72:7000/tracker/update",
+      "http://192.168.29.72:7000/tracker/watching/update",
+      body: json.encode(body),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    return response;
+  }
+
+  Future<dynamic> addToCompleted(body) async {
+    var response = await post(
+      "http://192.168.29.72:7000/tracker/completed/add_to_completed",
+      body: json.encode(body),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    return response;
+  }
+
+  Future<dynamic> getCompletedList(body) async {
+    var response = await post(
+      "http://192.168.29.72:7000/tracker/completed/get_completed",
       body: json.encode(body),
       headers: {"Content-Type": "application/json"},
     );
