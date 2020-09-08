@@ -3,6 +3,7 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:tv_tracker_flutter/screens/add/add_info.dart';
 import 'package:tv_tracker_flutter/screens/add/add_new.dart';
 import 'package:tv_tracker_flutter/screens/authenticate/authenticate.dart';
+import 'package:tv_tracker_flutter/screens/completed/completed_ind.dart';
 import 'package:tv_tracker_flutter/screens/home/home.dart';
 import 'package:tv_tracker_flutter/screens/watching/watching_ind.dart';
 import 'package:tv_tracker_flutter/screens/wrapper.dart';
@@ -14,7 +15,7 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarColor(Color.fromRGBO(76, 23, 90, 0.2));
+    FlutterStatusbarcolor.setStatusBarColor(Colors.black);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
@@ -23,6 +24,7 @@ class App extends StatelessWidget {
         '/addnew': (context) => AddNew(),
         '/add_info': (context) => AddInfo(),
         '/watch_info': (context) => WatchInd(),
+        '/completed_info': (context) => CompletedInd(),
       },
       home: SafeArea(
         child: Scaffold(

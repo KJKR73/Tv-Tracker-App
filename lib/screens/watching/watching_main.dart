@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tv_tracker_flutter/custom/watching_widget.dart';
 import 'package:tv_tracker_flutter/services/authentication/auth.dart';
@@ -26,7 +27,7 @@ class _WatchingPageState extends State<WatchingPage> {
             flex: 1,
             child: Container(
               decoration: BoxDecoration(
-                color: Color.fromRGBO(32, 26, 48, 1),
+                color: Colors.black,
                 border: Border(
                   bottom: BorderSide(color: Colors.white, width: 2),
                 ),
@@ -34,10 +35,9 @@ class _WatchingPageState extends State<WatchingPage> {
               child: Align(
                 child: Text(
                   "Watching",
-                  style: TextStyle(
-                    color: Color.fromRGBO(13, 245, 227, 1),
-                    fontFamily: "GM",
-                    fontSize: 26,
+                  style: GoogleFonts.roboto(
+                    color: Colors.white,
+                    fontSize: 30,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -49,7 +49,7 @@ class _WatchingPageState extends State<WatchingPage> {
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
                 return Expanded(
-                  flex: 8,
+                  flex: 9,
                   child: GridView.builder(
                     itemCount: snapshot.data.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -65,7 +65,7 @@ class _WatchingPageState extends State<WatchingPage> {
                 );
               } else {
                 return Expanded(
-                  flex: 8,
+                  flex: 9,
                   child: Container(
                     child: Center(
                       child: SpinKitFadingCircle(

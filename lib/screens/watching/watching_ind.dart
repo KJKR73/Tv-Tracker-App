@@ -47,7 +47,7 @@ class _WatchIndState extends State<WatchInd> {
           child: Container(
             height: MediaQuery.of(context).size.height - 23,
             width: MediaQuery.of(context).size.width,
-            color: Color.fromRGBO(32, 26, 48, 1),
+            color: Color.fromRGBO(24, 24, 24, 1),
             child: Column(
               children: [
                 Expanded(

@@ -75,13 +75,16 @@ class AuthService {
     return response;
   }
 
-  Future<dynamic> getCompletedList(body) async {
+  Future<dynamic> getCompletedList() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var id = pref.getString("_id");
     var response = await post(
       "http://192.168.29.72:7000/tracker/completed/get_completed",
-      body: json.encode(body),
+      body: json.encode({
+        "id": id,
+      }),
       headers: {"Content-Type": "application/json"},
     );
-
-    return response;
+    return json.decode(response.body);
   }
 }

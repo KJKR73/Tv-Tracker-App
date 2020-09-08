@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:tv_tracker_flutter/custom/add_widget.dart';
 import 'package:tv_tracker_flutter/services/authentication/auth.dart';
@@ -52,8 +53,9 @@ class _AddPageState extends State<AddPage> {
             children: [
               Expanded(
                 flex: 1,
-                child: Padding(
-                  padding: EdgeInsets.all(2),
+                child: Container(
+                  color: Colors.black,
+                  padding: EdgeInsets.fromLTRB(2, 2, 2, 1),
                   child: Card(
                     child: ListTile(
                       leading: Icon(
@@ -79,10 +81,9 @@ class _AddPageState extends State<AddPage> {
                           fillColor: Colors.red,
                           border: InputBorder.none,
                           hintText: "Search Series",
-                          hintStyle: TextStyle(
+                          hintStyle: GoogleFonts.roboto(
                             color: Colors.black,
-                            fontFamily: "GM",
-                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
                           ),
                         ),
                       ),
@@ -152,11 +153,10 @@ class _AddPageState extends State<AddPage> {
                           flex: 5,
                           child: Text(
                             "Don't see you series add it here",
-                            style: TextStyle(
+                            style: GoogleFonts.roboto(
                               color: Colors.white,
-                              fontFamily: "GM",
+                              fontSize: 17,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
                             ),
                           ),
                         ),

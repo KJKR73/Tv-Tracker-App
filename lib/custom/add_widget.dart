@@ -1,6 +1,7 @@
 import 'dart:convert';
 import "package:flutter/material.dart";
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,7 +37,7 @@ class AddWidget extends StatelessWidget {
       },
       child: Container(
         color: Colors.black,
-        padding: EdgeInsets.fromLTRB(3, 5, 3, 5),
+        padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
         child: Row(
           children: [
             Expanded(
@@ -55,7 +56,7 @@ class AddWidget extends StatelessWidget {
               flex: 2,
               child: Container(
                 height: 200,
-                color: Colors.grey[900],
+                color: Color.fromRGBO(24, 24, 24, 1),
                 child: Padding(
                   padding: EdgeInsets.all(25.0),
                   child: Column(
@@ -66,11 +67,10 @@ class AddWidget extends StatelessWidget {
                         flex: 2,
                         child: Text(
                           name,
-                          style: TextStyle(
+                          style: GoogleFonts.roboto(
                             color: Colors.white,
+                            fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            fontFamily: "GM",
-                            fontSize: 22,
                           ),
                         ),
                       ),
@@ -78,21 +78,19 @@ class AddWidget extends StatelessWidget {
                         flex: 1,
                         child: Text(
                           "Episodes : " + total,
-                          style: TextStyle(
+                          style: GoogleFonts.roboto(
                             color: Colors.white,
-                            fontFamily: "GM",
-                            fontSize: 16,
+                            fontSize: 17,
                           ),
                         ),
                       ),
                       Expanded(
                         flex: 1,
                         child: Text(
-                          "Season: " + season,
-                          style: TextStyle(
+                          "Season : " + season,
+                          style: GoogleFonts.roboto(
                             color: Colors.white,
-                            fontFamily: "GM",
-                            fontSize: 16,
+                            fontSize: 17,
                           ),
                         ),
                       ),
@@ -107,9 +105,9 @@ class AddWidget extends StatelessWidget {
                             color: Color.fromRGBO(13, 245, 227, 1),
                             child: Text(
                               "Add",
-                              style: TextStyle(
+                              style: GoogleFonts.roboto(
                                 color: Colors.black,
-                                fontFamily: "GM",
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

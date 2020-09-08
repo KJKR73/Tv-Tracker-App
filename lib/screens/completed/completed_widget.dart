@@ -1,18 +1,19 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
 // ignore: must_be_immutable
-class WatchingWidget extends StatefulWidget {
+class CompletedWidget extends StatefulWidget {
   dynamic data;
-  WatchingWidget({this.data});
+  CompletedWidget({this.data});
   @override
-  _WatchingWidgetState createState() => _WatchingWidgetState();
+  _CompletedWidgetState createState() => _CompletedWidgetState();
 }
 
-class _WatchingWidgetState extends State<WatchingWidget> {
+class _CompletedWidgetState extends State<CompletedWidget> {
   Future<dynamic> _getImage(body) async {
     var response = await post(
       "http://192.168.29.72:7000/misc/getimage",
@@ -28,7 +29,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
     return GestureDetector(
       onTap: () async {
         var image64 = await _getImage(body);
-        Navigator.pushNamed(context, '/watch_info', arguments: {
+        Navigator.pushNamed(context, '/completed_info', arguments: {
           "body": body,
           "data": widget.data,
           "image64": image64,

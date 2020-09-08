@@ -52,12 +52,12 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(32, 26, 48, 1),
+        backgroundColor: Color.fromRGBO(24, 24, 24, 1),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Color.fromRGBO(32, 26, 48, 1),
+          backgroundColor: Color.fromRGBO(32, 32, 32, 1),
           currentIndex: _currentIndex,
-          selectedItemColor: Color.fromRGBO(13, 245, 227, 1),
+          selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white24,
           items: [
             BottomNavigationBarItem(
