@@ -100,8 +100,6 @@ class _WatchingWidgetState extends State<WatchingWidget> {
                                                 Color.fromRGBO(13, 245, 227, 1),
                                             fontSize: 16.0,
                                           );
-                                          Navigator.popAndPushNamed(
-                                              context, "/home");
                                         } else {
                                           Fluttertoast.showToast(
                                             msg: response.body,

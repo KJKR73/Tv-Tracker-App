@@ -105,4 +105,17 @@ class AuthService {
     );
     return response;
   }
+
+  Future<dynamic> getDroppedList() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var id = pref.getString("_id");
+    var response = await post(
+      "http://192.168.29.72:7000/tracker/dropped/getDroppedList",
+      body: json.encode({
+        "id": id,
+      }),
+      headers: {"Content-Type": "application/json"},
+    );
+    return json.decode(response.body);
+  }
 }

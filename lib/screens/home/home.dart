@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tv_tracker_flutter/screens/add/add_main.dart';
 import 'package:tv_tracker_flutter/screens/completed/completed_main.dart';
+import 'package:tv_tracker_flutter/screens/dropped/dropped_main.dart';
 import 'package:tv_tracker_flutter/screens/home/home_widget.dart';
 import 'package:tv_tracker_flutter/screens/watching/watching_main.dart';
 
@@ -109,7 +110,7 @@ class _HomeState extends State<Home> {
     } else if (index == 1) {
       return WatchingPage();
     } else if (index == 2) {
-      return Container();
+      return DroppedPage();
     } else if (index == 3) {
       return CompletedPage();
     } else if (index == 4) {

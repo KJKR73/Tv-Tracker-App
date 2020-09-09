@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tv_tracker_flutter/screens/completed/completed_widget.dart';
+import 'package:tv_tracker_flutter/screens/dropped/dropped_widget.dart';
 import 'package:tv_tracker_flutter/services/authentication/auth.dart';
 
-class CompletedPage extends StatefulWidget {
+class DroppedPage extends StatefulWidget {
   @override
-  _CompletedPageState createState() => _CompletedPageState();
+  _DroppedPageState createState() => _DroppedPageState();
 }
 
-class _CompletedPageState extends State<CompletedPage> {
+class _DroppedPageState extends State<DroppedPage> {
   final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class _CompletedPageState extends State<CompletedPage> {
               ),
               child: Align(
                 child: Text(
-                  "Completed Series",
+                  "Dropped Series",
                   style: GoogleFonts.roboto(
                     color: Colors.white,
                     fontSize: 30,
@@ -60,26 +61,55 @@ class _CompletedPageState extends State<CompletedPage> {
             ),
           ),
           FutureBuilder(
-            future: _auth.getCompletedList(),
+            future: _auth.getDroppedList(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
+                if (snapshot.data.length > 0) {
+                  return Expanded(
+                    flex: 9,
+                    child: GridView.builder(
+                      itemCount: snapshot.data.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.6,
+                      ),
+                      itemBuilder: (context, index) {
+                        return DroppedWidget(
+                          data: snapshot.data[index],
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return Expanded(
+                    flex: 9,
+                    child: Container(
+                      child: Center(
+                        child: Center(
+                          child: Text(
+                            ":) No Dropped Series A Real Player",
+                            style: GoogleFonts.roboto(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              } else {
                 return Expanded(
                   flex: 9,
-                  child: GridView.builder(
-                    itemCount: snapshot.data.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.6,
+                  child: Container(
+                    child: Center(
+                      child: SpinKitFadingCircle(
+                        color: Colors.white,
+                      ),
                     ),
-                    itemBuilder: (context, index) {
-                      return CompletedWidget(
-                        data: snapshot.data[index],
-                      );
-                    },
                   ),
                 );
-              } else {
-                return Expanded(flex: 9, child: Container());
               }
             },
           )
