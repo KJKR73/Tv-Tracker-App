@@ -87,4 +87,22 @@ class AuthService {
     );
     return json.decode(response.body);
   }
+
+  Future<dynamic> deleteSeriesFromTracker(body) async {
+    var response = await post(
+      "http://192.168.29.72:7000/tracker/watching/deleteSeries",
+      body: json.encode(body),
+      headers: {"Content-Type": "application/json"},
+    );
+    return response;
+  }
+
+  Future<dynamic> dropSeries(body) async {
+    var response = await post(
+      "http://192.168.29.72:7000/tracker/dropped/dropSeries",
+      body: json.encode(body),
+      headers: {"Content-Type": "application/json"},
+    );
+    return response;
+  }
 }

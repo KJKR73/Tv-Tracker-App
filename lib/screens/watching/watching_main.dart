@@ -28,8 +28,34 @@ class _WatchingPageState extends State<WatchingPage> {
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.black,
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.black,
+                      Colors.grey[900],
+                      Colors.grey[900],
+                      Colors.black,
+                    ]),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey[300],
+                    offset: Offset(4.0, 4.0),
+                    blurRadius: 15.0,
+                    spreadRadius: 1.0,
+                  ),
+                  BoxShadow(
+                    color: Colors.white,
+                    offset: Offset(-4.0, -4.0),
+                    blurRadius: 15.0,
+                    spreadRadius: 1.0,
+                  ),
+                ],
                 border: Border(
-                  bottom: BorderSide(color: Colors.white, width: 2),
+                  bottom: BorderSide(
+                    color: Colors.white,
+                    width: 2,
+                  ),
                 ),
               ),
               child: Align(
@@ -48,21 +74,41 @@ class _WatchingPageState extends State<WatchingPage> {
             future: _auth.getUserTracker(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
-                return Expanded(
-                  flex: 9,
-                  child: GridView.builder(
-                    itemCount: snapshot.data.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.6,
+                if (snapshot.data.length > 0) {
+                  return Expanded(
+                    flex: 9,
+                    child: GridView.builder(
+                      itemCount: snapshot.data.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.6,
+                      ),
+                      itemBuilder: (context, index) {
+                        return WatchingWidget(
+                          data: snapshot.data[index],
+                        );
+                      },
                     ),
-                    itemBuilder: (context, index) {
-                      return WatchingWidget(
-                        data: snapshot.data[index],
-                      );
-                    },
-                  ),
-                );
+                  );
+                } else {
+                  return Expanded(
+                    flex: 9,
+                    child: Container(
+                      child: Center(
+                        child: Center(
+                          child: Text(
+                            "Tracker Empty Add Series from Add Page",
+                            style: GoogleFonts.roboto(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
               } else {
                 return Expanded(
                   flex: 9,

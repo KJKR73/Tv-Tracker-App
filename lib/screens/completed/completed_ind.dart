@@ -58,6 +58,17 @@ class _CompletedIndState extends State<CompletedInd> {
                 Expanded(
                   flex: 1,
                   child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.black,
+                            Colors.grey[900],
+                            Colors.grey[900],
+                            Colors.black,
+                          ]),
+                    ),
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
                       children: [
@@ -94,6 +105,9 @@ class _CompletedIndState extends State<CompletedInd> {
                       ],
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Expanded(
                   flex: 4,

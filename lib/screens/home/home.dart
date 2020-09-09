@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tv_tracker_flutter/screens/add/add_main.dart';
 import 'package:tv_tracker_flutter/screens/completed/completed_main.dart';
+import 'package:tv_tracker_flutter/screens/home/home_widget.dart';
 import 'package:tv_tracker_flutter/screens/watching/watching_main.dart';
 
 class Home extends StatefulWidget {
@@ -103,8 +104,12 @@ class _HomeState extends State<Home> {
   }
 
   Widget _load(var index) {
-    if (index == 1) {
+    if (index == 0) {
+      return HomeWidget();
+    } else if (index == 1) {
       return WatchingPage();
+    } else if (index == 2) {
+      return Container();
     } else if (index == 3) {
       return CompletedPage();
     } else if (index == 4) {
