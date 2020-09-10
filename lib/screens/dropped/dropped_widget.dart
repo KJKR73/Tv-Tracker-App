@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tv_tracker_flutter/services/authentication/auth.dart';
+import 'package:tv_tracker_flutter/shared/constants.dart';
 
 // ignore: must_be_immutable
 class DroppedWidget extends StatefulWidget {
@@ -22,6 +26,7 @@ class _DroppedWidgetState extends State<DroppedWidget> {
     return base64.decode(json.decode(response.body));
   }
 
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     Map body = {"series_id": widget.data["_id"]};
@@ -69,48 +74,48 @@ class _DroppedWidgetState extends State<DroppedWidget> {
                                   child: Padding(
                                     padding: EdgeInsets.fromLTRB(0, 1, 2, 2),
                                     child: RaisedButton(
-                                      color: Colors.white,
+                                      color: Colors.cyan,
                                       child: Text('Re-Add to Watching'),
                                       onPressed: () async {
-                                        // SharedPreferences pref =
-                                        //     await SharedPreferences
-                                        //         .getInstance();
-                                        // var id = pref.getString("_id");
-                                        // Map body = {
-                                        //   "id": id,
-                                        //   "s_id": widget.data["_id"]
-                                        // };
-                                        // var response =
-                                        //     await _auth.dropSeries(body);
+                                        SharedPreferences pref =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        var id = pref.getString("_id");
+                                        Map body = {
+                                          "id": id,
+                                          "s_id": widget.data["_id"]
+                                        };
+                                        var response =
+                                            await _auth.reAddToWatching(body);
 
-                                        // if (response.statusCode == 200 &&
-                                        //     response.body == "success") {
-                                        //   Fluttertoast.showToast(
-                                        //     msg: "Success",
-                                        //     toastLength: Toast.LENGTH_SHORT,
-                                        //     gravity: ToastGravity.CENTER,
-                                        //     timeInSecForIosWeb: 1,
-                                        //     backgroundColor:
-                                        //         Color.fromRGBO(32, 26, 48, 1),
-                                        //     textColor:
-                                        //         Color.fromRGBO(13, 245, 227, 1),
-                                        //     fontSize: 16.0,
-                                        //   );
-                                        //   Navigator.popAndPushNamed(
-                                        //       context, "/home");
-                                        // } else {
-                                        //   Fluttertoast.showToast(
-                                        //     msg: response.body,
-                                        //     toastLength: Toast.LENGTH_SHORT,
-                                        //     gravity: ToastGravity.CENTER,
-                                        //     timeInSecForIosWeb: 2,
-                                        //     backgroundColor: Colors.red,
-                                        //     textColor: Colors.black,
-                                        //     fontSize: 16.0,
-                                        //   );
-                                        // }
-                                        // Navigator.popAndPushNamed(
-                                        //     context, "/home");
+                                        if (response.statusCode == 200 &&
+                                            response.body == "success") {
+                                          Fluttertoast.showToast(
+                                            msg: "Success",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor:
+                                                Color.fromRGBO(32, 26, 48, 1),
+                                            textColor:
+                                                Color.fromRGBO(13, 245, 227, 1),
+                                            fontSize: 16.0,
+                                          );
+                                          Navigator.popAndPushNamed(
+                                              context, "/home");
+                                        } else {
+                                          Fluttertoast.showToast(
+                                            msg: response.body,
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 2,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.black,
+                                            fontSize: 16.0,
+                                          );
+                                        }
+                                        Navigator.popAndPushNamed(
+                                            context, "/home");
                                       },
                                     ),
                                   ),

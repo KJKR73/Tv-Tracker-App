@@ -16,7 +16,7 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarColor(Colors.black);
+    FlutterStatusbarcolor.setStatusBarColor(Color.fromRGBO(9, 12, 37, 1));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {

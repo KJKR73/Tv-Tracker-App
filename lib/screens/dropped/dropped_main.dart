@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tv_tracker_flutter/screens/dropped/dropped_widget.dart';
 import 'package:tv_tracker_flutter/services/authentication/auth.dart';
+import 'package:tv_tracker_flutter/shared/constants.dart';
 
 class DroppedPage extends StatefulWidget {
   @override
@@ -19,35 +20,7 @@ class _DroppedPageState extends State<DroppedPage> {
           Expanded(
             flex: 1,
             child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black,
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Colors.black,
-                      Colors.grey[900],
-                      Colors.grey[900],
-                      Colors.black,
-                    ]),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey[300],
-                    offset: Offset(4.0, 4.0),
-                    blurRadius: 15.0,
-                    spreadRadius: 1.0,
-                  ),
-                  BoxShadow(
-                    color: Colors.white,
-                    offset: Offset(-4.0, -4.0),
-                    blurRadius: 15.0,
-                    spreadRadius: 1.0,
-                  ),
-                ],
-                border: Border(
-                  bottom: BorderSide(color: Colors.white, width: 2),
-                ),
-              ),
+              decoration: topDecor(),
               child: Align(
                 child: Text(
                   "Dropped Series",
@@ -87,7 +60,7 @@ class _DroppedPageState extends State<DroppedPage> {
                       child: Center(
                         child: Center(
                           child: Text(
-                            ":) No Dropped Series A Real Player",
+                            "😎 No Dropped Series A Real Player",
                             style: GoogleFonts.roboto(
                               color: Colors.white,
                               fontSize: 24,

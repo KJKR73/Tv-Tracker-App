@@ -118,4 +118,13 @@ class AuthService {
     );
     return json.decode(response.body);
   }
+
+  Future<dynamic> reAddToWatching(body) async {
+    var response = await post(
+      "http://192.168.29.72:7000/tracker/dropped/reAddToWatching",
+      body: json.encode(body),
+      headers: {"Content-Type": "application/json"},
+    );
+    return response;
+  }
 }

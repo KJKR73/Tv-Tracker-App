@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tv_tracker_flutter/services/authentication/auth.dart';
+import 'package:tv_tracker_flutter/shared/constants.dart';
 
 // ignore: must_be_immutable
 class WatchingWidget extends StatefulWidget {
@@ -73,7 +74,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
                                   child: Padding(
                                     padding: EdgeInsets.fromLTRB(0, 1, 2, 2),
                                     child: RaisedButton(
-                                      color: Colors.white,
+                                      color: secondaryColor,
                                       child: Text('Drop'),
                                       onPressed: () async {
                                         SharedPreferences pref =
@@ -122,7 +123,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
                                   child: Padding(
                                     padding: EdgeInsets.fromLTRB(2, 1, 0, 2),
                                     child: RaisedButton(
-                                      color: Colors.white,
+                                      color: Colors.cyan,
                                       child: Text('Delete'),
                                       onPressed: () async {
                                         SharedPreferences pref =

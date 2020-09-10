@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:tv_tracker_flutter/custom/add_widget.dart';
 import 'package:tv_tracker_flutter/services/authentication/auth.dart';
+import 'package:tv_tracker_flutter/shared/constants.dart';
 
 class AddPage extends StatefulWidget {
   dynamic data;
@@ -54,7 +55,7 @@ class _AddPageState extends State<AddPage> {
               Expanded(
                 flex: 1,
                 child: Container(
-                  color: Colors.black,
+                  decoration: topDecor(),
                   padding: EdgeInsets.fromLTRB(2, 2, 2, 1),
                   child: Card(
                     child: ListTile(
@@ -78,7 +79,6 @@ class _AddPageState extends State<AddPage> {
                         onChanged: _onTextChanged,
                         controller: _controller,
                         decoration: InputDecoration(
-                          fillColor: Colors.red,
                           border: InputBorder.none,
                           hintText: "Search Series",
                           hintStyle: GoogleFonts.roboto(
@@ -141,7 +141,11 @@ class _AddPageState extends State<AddPage> {
                 flex: 1,
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1.0,
+                    ),
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(

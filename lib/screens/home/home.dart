@@ -8,6 +8,7 @@ import 'package:tv_tracker_flutter/screens/completed/completed_main.dart';
 import 'package:tv_tracker_flutter/screens/dropped/dropped_main.dart';
 import 'package:tv_tracker_flutter/screens/home/home_widget.dart';
 import 'package:tv_tracker_flutter/screens/watching/watching_main.dart';
+import 'package:tv_tracker_flutter/shared/constants.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -52,14 +53,14 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(24, 24, 24, 1),
+        backgroundColor: Color.fromRGBO(9, 12, 28, 1),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Color.fromRGBO(32, 32, 32, 1),
+          backgroundColor: Color.fromRGBO(20, 24, 43, 1),
           currentIndex: _currentIndex,
-          selectedItemColor: Colors.white,
+          selectedItemColor: secondaryColor,
           unselectedItemColor: Colors.white24,
           items: [
             BottomNavigationBarItem(

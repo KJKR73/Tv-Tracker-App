@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tv_tracker_flutter/shared/constants.dart';
 
 // ignore: must_be_immutable
 class AddWidget extends StatelessWidget {
@@ -36,8 +37,8 @@ class AddWidget extends StatelessWidget {
         });
       },
       child: Container(
-        color: Colors.black,
-        padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
+        color: primaryColor,
+        padding: EdgeInsets.fromLTRB(0, 2, 8, 2),
         child: Row(
           children: [
             Expanded(
@@ -56,7 +57,7 @@ class AddWidget extends StatelessWidget {
               flex: 2,
               child: Container(
                 height: 200,
-                color: Color.fromRGBO(24, 24, 24, 1),
+                color: primaryColor,
                 child: Padding(
                   padding: EdgeInsets.all(25.0),
                   child: Column(
@@ -104,7 +105,7 @@ class AddWidget extends StatelessWidget {
                             ),
                             color: Color.fromRGBO(13, 245, 227, 1),
                             child: Text(
-                              "Add",
+                              "Add To Tracker",
                               style: GoogleFonts.roboto(
                                 color: Colors.black,
                                 fontSize: 16,

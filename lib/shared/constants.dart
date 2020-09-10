@@ -28,3 +28,25 @@ InputDecoration formDecoration() {
     ),
   );
 }
+
+// Define the colors here
+
+Color primaryColor = Color.fromRGBO(9, 12, 28, 1);
+Color secondaryColor = Color.fromRGBO(13, 245, 227, 1);
+
+BoxDecoration topDecor() {
+  return BoxDecoration(
+    color: Colors.black,
+    gradient: LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [
+        Colors.pink,
+        Colors.orange,
+      ],
+    ),
+    borderRadius: BorderRadius.circular(
+      4.0,
+    ),
+  );
+}
