@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tv_tracker_flutter/services/authentication/auth.dart';
 import 'package:tv_tracker_flutter/shared/constants.dart';
@@ -23,6 +24,7 @@ class _LoginState extends State<Login> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString("token", data["token"]);
     pref.setString("_id", data["user_id"]);
+    pref.setString("username", data["username"]);
   }
 
   AuthService auth = new AuthService();
@@ -33,7 +35,7 @@ class _LoginState extends State<Login> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(32, 26, 48, 1),
+      backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
@@ -46,7 +48,7 @@ class _LoginState extends State<Login> {
                 child: ClipPath(
                   clipper: TopClipper(),
                   child: Container(
-                    color: Color.fromRGBO(13, 245, 227, 1),
+                    decoration: topDecor(),
                     child: Align(
                       alignment: Alignment.center,
                       child: FittedBox(
@@ -143,6 +145,7 @@ class _LoginState extends State<Login> {
                             bottom: 40,
                           ),
                           child: TextFormField(
+                            obscureText: true,
                             onChanged: (value) {
                               setState(() {
                                 this.password = value;
@@ -178,7 +181,7 @@ class _LoginState extends State<Login> {
                               borderRadius: BorderRadius.circular(50.0),
                             ),
                             textColor: Colors.black,
-                            color: Color.fromRGBO(13, 245, 227, 1),
+                            color: Colors.orange,
                             child: Text(
                               "LOGIN",
                               style: TextStyle(
@@ -199,11 +202,19 @@ class _LoginState extends State<Login> {
 
                                 try {
                                   // if login details valid check for success msg
-                                  var success =
-                                      json.decode(responseServer)["success"];
-
-                                  if (success) {
-                                    Navigator.popAndPushNamed(context, '/home');
+                                  if (responseServer.statusCode == 200) {
+                                    var success = json
+                                        .decode(responseServer.body)["success"];
+                                    await saveDataLocal(
+                                        json.decode(responseServer.body));
+                                    if (success) {
+                                      Navigator.popAndPushNamed(
+                                          context, '/home');
+                                    }
+                                  } else {
+                                    setState(() {
+                                      this.err = "Invalid username/password";
+                                    });
                                   }
                                 } catch (ex) {
                                   setState(() {
@@ -211,8 +222,6 @@ class _LoginState extends State<Login> {
                                   });
                                 }
                                 // Save the user data in the shared prefs fo the first time
-                                await saveDataLocal(
-                                    json.decode(responseServer));
                               }
                             },
                           ),

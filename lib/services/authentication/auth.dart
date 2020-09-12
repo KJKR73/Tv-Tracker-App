@@ -7,16 +7,16 @@ class AuthService {
   // Makes the user login the first time
   Future<dynamic> postLogin(data) async {
     var response = await post(
-      'http://192.168.29.72:7000/api/login/',
+      'http://192.168.29.72:7000/user/login/',
       body: json.encode(data),
       headers: {"Content-Type": "application/json"},
     );
-    return response.body;
+    return response;
   }
 
   Future<dynamic> registerUser(body) async {
     var response = await post(
-      "http://192.168.29.72:7000/api/register/",
+      "http://192.168.29.72:7000/user/register/",
       body: json.encode(body),
       headers: {"Content-Type": "application/json"},
     );

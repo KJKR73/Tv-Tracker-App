@@ -50,3 +50,20 @@ BoxDecoration topDecor() {
     ),
   );
 }
+
+BoxDecoration homeDecor() {
+  return BoxDecoration(
+    color: Colors.black,
+    gradient: LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [
+        Colors.pink,
+        Colors.orange,
+      ],
+    ),
+    borderRadius: BorderRadius.circular(
+      4.0,
+    ),
+  );
+}

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -56,6 +57,96 @@ class _HomeState extends State<Home> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color.fromRGBO(9, 12, 28, 1),
+        drawer: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: primaryColor,
+          ),
+          child: Drawer(
+            child: ListView(
+              children: [
+                DrawerHeader(
+                  child: Container(
+                    decoration: topDecor(),
+                    child: Center(
+                      child: Text(
+                        "TTracker",
+                        style: GoogleFonts.oswald(
+                          fontSize: 66,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    await removeDataLocal();
+                    Navigator.popAndPushNamed(context, '/authenticate');
+                  },
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.all_out,
+                      color: Colors.orange,
+                      size: 34,
+                    ),
+                    title: Text(
+                      "Logout",
+                      style: GoogleFonts.roboto(
+                        color: Colors.orange,
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 300,
+                ),
+                Container(
+                  height: 100,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          "About",
+                          style: GoogleFonts.roboto(
+                            color: Colors.orange,
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          "Author Name : Karanjot Singh",
+                          style: GoogleFonts.roboto(
+                            color: Colors.orange,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          "App Not for Sale",
+                          style: GoogleFonts.roboto(
+                            color: Colors.red,
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Color.fromRGBO(20, 24, 43, 1),
@@ -114,7 +205,7 @@ class _HomeState extends State<Home> {
       return DroppedPage();
     } else if (index == 3) {
       return CompletedPage();
-    } else if (index == 4) {
+    } else {
       return FutureBuilder(
         future: initData(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -134,41 +225,6 @@ class _HomeState extends State<Home> {
             );
           }
         },
-      );
-    } else {
-      return SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                Center(
-                  child: Text(
-                    "HOME",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                RaisedButton(
-                  onPressed: () async {
-                    await removeDataLocal();
-                    Navigator.popAndPushNamed(context, '/authenticate');
-                  },
-                  child: Text(
-                    "LOGOUT",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
       );
     }
   }

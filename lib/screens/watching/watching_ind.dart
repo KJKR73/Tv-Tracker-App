@@ -47,65 +47,71 @@ class _WatchIndState extends State<WatchInd> {
           child: Container(
             height: MediaQuery.of(context).size.height - 23,
             width: MediaQuery.of(context).size.width,
-            color: Color.fromRGBO(24, 24, 24, 1),
+            color: primaryColor,
             child: Column(
               children: [
                 Expanded(
                   flex: 1,
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.white,
-                              size: 26,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 9,
-                          child: Center(
-                            child: Text(
-                              body['name'],
-                              style: GoogleFonts.roboto(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
+                    child: Container(
+                      decoration: topDecor(),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Icon(
+                                Icons.arrow_back_ios,
                                 color: Colors.white,
+                                size: 26,
                               ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(),
-                        ),
-                      ],
+                          Expanded(
+                            flex: 9,
+                            child: Center(
+                              child: Text(
+                                body['name'],
+                                style: GoogleFonts.roboto(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 4,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 2.0,
-                        color: Colors.black,
+                  flex: 5,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 2.0,
+                          color: Colors.black,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    width: MediaQuery.of(context).size.width - 170,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.memory(
-                        data['image64'],
-                        fit: BoxFit.fill,
+                      width: MediaQuery.of(context).size.width - 170,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.memory(
+                          data['image64'],
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                   ),
@@ -122,10 +128,7 @@ class _WatchIndState extends State<WatchInd> {
                             flex: 1,
                             child: ListTile(
                               leading: Container(
-                                decoration: BoxDecoration(
-                                  color: Color.fromRGBO(13, 245, 227, 1),
-                                  borderRadius: BorderRadius.circular(3),
-                                ),
+                                decoration: topDecor(),
                                 child: Padding(
                                   padding: EdgeInsets.fromLTRB(8, 8, 25, 8),
                                   child: Text(
@@ -133,6 +136,7 @@ class _WatchIndState extends State<WatchInd> {
                                     style: GoogleFonts.roboto(
                                       color: Colors.black,
                                       fontSize: 18,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -161,10 +165,7 @@ class _WatchIndState extends State<WatchInd> {
                             flex: 1,
                             child: ListTile(
                               trailing: Container(
-                                decoration: BoxDecoration(
-                                  color: Color.fromRGBO(13, 245, 227, 1),
-                                  borderRadius: BorderRadius.circular(3),
-                                ),
+                                decoration: topDecor(),
                                 child: Padding(
                                   padding: EdgeInsets.all(8),
                                   child: Text(
@@ -172,15 +173,13 @@ class _WatchIndState extends State<WatchInd> {
                                     style: GoogleFonts.roboto(
                                       color: Colors.black,
                                       fontSize: 18,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
                               ),
                               leading: Container(
-                                decoration: BoxDecoration(
-                                  color: Color.fromRGBO(13, 245, 227, 1),
-                                  borderRadius: BorderRadius.circular(3),
-                                ),
+                                decoration: topDecor(),
                                 child: Padding(
                                   padding: EdgeInsets.fromLTRB(8, 8, 17, 8),
                                   child: Text(
@@ -188,6 +187,7 @@ class _WatchIndState extends State<WatchInd> {
                                     style: GoogleFonts.roboto(
                                       color: Colors.black,
                                       fontSize: 18,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -230,10 +230,7 @@ class _WatchIndState extends State<WatchInd> {
                             flex: 1,
                             child: ListTile(
                               leading: Container(
-                                decoration: BoxDecoration(
-                                  color: Color.fromRGBO(13, 245, 227, 1),
-                                  borderRadius: BorderRadius.circular(3),
-                                ),
+                                decoration: topDecor(),
                                 child: Padding(
                                   padding: EdgeInsets.fromLTRB(8, 8, 5, 8),
                                   child: Text(
@@ -241,6 +238,7 @@ class _WatchIndState extends State<WatchInd> {
                                     style: GoogleFonts.roboto(
                                       color: Colors.black,
                                       fontSize: 18,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -277,7 +275,7 @@ class _WatchIndState extends State<WatchInd> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  color: Color.fromRGBO(13, 245, 227, 1),
+                                  color: Colors.orange,
                                   child: Text(
                                     "Update",
                                     style: GoogleFonts.roboto(

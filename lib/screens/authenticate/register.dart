@@ -24,7 +24,7 @@ class _RegisterState extends State<Register> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(32, 26, 48, 1),
+      backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Container(
@@ -37,7 +37,7 @@ class _RegisterState extends State<Register> {
                 child: ClipPath(
                   clipper: TopClipper(),
                   child: Container(
-                    color: Color.fromRGBO(13, 245, 227, 1),
+                    decoration: topDecor(),
                     child: Align(
                       alignment: Alignment.center,
                       child: FittedBox(
@@ -158,6 +158,7 @@ class _RegisterState extends State<Register> {
                             bottom: 40,
                           ),
                           child: TextFormField(
+                            obscureText: true,
                             onChanged: (value) {
                               setState(() {
                                 this.password = value;
@@ -192,7 +193,7 @@ class _RegisterState extends State<Register> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50.0)),
                             textColor: Colors.black,
-                            color: Color.fromRGBO(13, 245, 227, 1),
+                            color: Colors.orange,
                             child: Text(
                               "REGISTER",
                               style: TextStyle(

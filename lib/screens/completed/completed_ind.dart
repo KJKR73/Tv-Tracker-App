@@ -52,23 +52,13 @@ class _CompletedIndState extends State<CompletedInd> {
           child: Container(
             height: MediaQuery.of(context).size.height - 23,
             width: MediaQuery.of(context).size.width,
-            color: Color.fromRGBO(24, 24, 24, 1),
+            color: primaryColor,
             child: Column(
               children: [
                 Expanded(
                   flex: 1,
                   child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Colors.black,
-                            Colors.grey[900],
-                            Colors.grey[900],
-                            Colors.black,
-                          ]),
-                    ),
+                    decoration: topDecor(),
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
                       children: [
@@ -137,88 +127,124 @@ class _CompletedIndState extends State<CompletedInd> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: ListTile(
-                            leading: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(3),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(8, 8, 25, 8),
-                                child: Text(
-                                  "Season",
-                                  style: GoogleFonts.roboto(
-                                    color: Colors.white,
-                                    fontSize: 18,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    decoration: topDecor(),
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(8, 8, 5, 8),
+                                      child: Text(
+                                        "Season",
+                                        style: GoogleFonts.roboto(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            title: Text(
-                              "1",
-                              style: GoogleFonts.roboto(
-                                color: Colors.white,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      body["season"],
+                                      style: GoogleFonts.roboto(
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                         Expanded(
                           flex: 1,
-                          child: ListTile(
-                            leading: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(3),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(8, 8, 17, 8),
-                                child: Text(
-                                  "Total Episodes",
-                                  style: GoogleFonts.roboto(
-                                    color: Colors.white,
-                                    fontSize: 18,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    decoration: topDecor(),
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(8, 8, 5, 8),
+                                      child: Text(
+                                        "Total Episodes",
+                                        style: GoogleFonts.roboto(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            title: Text(
-                              body['total'],
-                              style: GoogleFonts.roboto(
-                                color: Colors.white,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      body["total"],
+                                      style: GoogleFonts.roboto(
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                         Expanded(
                           flex: 1,
-                          child: ListTile(
-                            leading: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(3),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(8, 8, 5, 8),
-                                child: Text(
-                                  "Completed On",
-                                  style: GoogleFonts.roboto(
-                                    color: Colors.white,
-                                    fontSize: 18,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    decoration: topDecor(),
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(8, 8, 5, 8),
+                                      child: Text(
+                                        "Completed On",
+                                        style: GoogleFonts.roboto(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            title: Text(
-                              displayDate,
-                              style: GoogleFonts.roboto(
-                                color: Colors.white,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      displayDate,
+                                      style: GoogleFonts.roboto(
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

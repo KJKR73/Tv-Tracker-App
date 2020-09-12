@@ -12,13 +12,13 @@ class CreatePie extends StatelessWidget {
       _createSampleData(this.data),
       animate: this.animate,
       animationDuration: Duration(milliseconds: 500),
-      behaviors: [
-        new charts.DatumLegend(
-          entryTextStyle: charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(Colors.white),
-          ),
-        ),
-      ],
+      // behaviors: [
+      //   new charts.DatumLegend(
+      //     entryTextStyle: charts.TextStyleSpec(
+      //       color: charts.ColorUtil.fromDartColor(Colors.white),
+      //     ),
+      //   ),
+      // ],
       defaultRenderer: new charts.ArcRendererConfig(
         arcWidth: 100,
         arcRendererDecorators: [
@@ -33,9 +33,9 @@ class CreatePie extends StatelessWidget {
   static List<charts.Series<Tracker, String>> _createSampleData(
       dynamic dataPie) {
     final data = [
-      new Tracker(dataPie[0]["name"], dataPie[0]["percent"], Colors.red),
-      new Tracker(dataPie[1]["name"], dataPie[1]["percent"], Colors.white),
-      new Tracker(dataPie[2]["name"], dataPie[2]["percent"], Colors.orange),
+      new Tracker(dataPie[0]["name"], dataPie[0]["percent"], Colors.white),
+      new Tracker(dataPie[1]["name"], dataPie[1]["percent"], Colors.green),
+      new Tracker(dataPie[2]["name"], dataPie[2]["percent"], Colors.blue[400]),
     ];
 
     return [
